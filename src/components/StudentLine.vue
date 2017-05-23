@@ -1,19 +1,36 @@
 <script>
   export default {
-    props: ['student'],
+    props: ['student', 'indexA'],
+    data() {
+      return {
+        editInput: '',
+      };
+    },
+    computed: {
+      editNewStudent() {
+        return {
+          firstname: this.editInput,
+        };
+      },
+    },
     methods: {
-      remove() {
+      removeStudent() {
         this.$emit('remove');
+      },
+      editStudent() {
+        this.$emit('edit', this.editNewStudent, this.indexA);
+        this.editInput = '';
       },
     },
   };
 </script>
 
-<template lang="pug">
-  div
-    | {{student.firstname}}
-    button(@click="remove") Supprimer
+<template>
+  <div>
+      {{student.firstname}}
+    <button v-on:click='removeStudent()'>Delete</button>
+  <button v-on:click='editStudent()'>Edit</button> <input v-model="editInput">
+  </div>
 </template>
-
 <style>
 </style>
